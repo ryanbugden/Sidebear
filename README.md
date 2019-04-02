@@ -2,7 +2,9 @@
 
 ![](./_images/Sidebear_Icon.png)
 <br />
-Robofont extension for manipulating sidebearings. Sidebear installs itself in your Inspector, underneath the `GlyphInfoPane`.
+Robofont extension for manipulating sidebearings. 
+<br />
+Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 <br />
 <br />
 
