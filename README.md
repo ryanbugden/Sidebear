@@ -8,7 +8,7 @@ Robofont extension for manipulating sidebearings. Sidebear installs itself in yo
 
 ![](./_images/Sidebear_screen.png)
 
-##Actions include:
+## Actions include:
 `Swap sidebearings`
 <br />
 `Make LSB = RSB`
@@ -17,7 +17,7 @@ Robofont extension for manipulating sidebearings. Sidebear installs itself in yo
 <br />
 `Make RSB = LSB`
 
-#####Choose an increment, then:
+##### Choose an increment, then:
 `Expand both sidebearings` equally by that increment.
 <br />
 `Contract both sidebearings` by that increment.
