@@ -20,7 +20,7 @@ Robofont extension for manipulating sidebearings. Sidebear installs itself in yo
 ##### Choose an increment, then:
 `Expand both sidebearings` equally by that increment.
 <br />
-`Contract both sidebearings` by that increment.
+`Contract both sidebearings` equally by that increment.
 <br /><br /><br />
 
 <hr />
