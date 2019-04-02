@@ -15,7 +15,7 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 <br />
 `Make LSB = RSB`
 <br />
-`Center glyph` Make SBs equal (Set width may change +/- 1)
+`Center glyph` Make SBs equal (Set width may change ± 1)
 <br />
 `Make RSB = LSB`
 
