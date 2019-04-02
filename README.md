@@ -2,7 +2,7 @@
 
 ![](./_images/Sidebear_Icon.png)
 <br />
-Robofont extension for manipulating sidebearings. 
+Robofont extension for manipulating your glyph’s sidebearings. 
 <br />
 Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 <br />
@@ -11,7 +11,7 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 ![](./_images/Sidebear_screen.png)
 
 ## Actions include:
-`Swap sidebearings`
+`Swap SBs`
 <br />
 `Make LSB = RSB`
 <br />
@@ -20,9 +20,9 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 `Make RSB = LSB`
 
 ##### Choose an increment, then:
-`Expand both sidebearings` equally by that increment.
+`Expand both SBs` equally by that increment.
 <br />
-`Contract both sidebearings` equally by that increment.
+`Contract both SBs` equally by that increment.
 <br /><br /><br />
 
 <hr />
