@@ -282,18 +282,18 @@ class Sidebear:
     def glyphChanged(self, info):
         self.g = CurrentGlyph()
         if self.glyphNameValidator(self.g) == True:
-            print('Glyph name validator was passed: %s' % self.g.name)
+            #print('Glyph name validator was passed: %s' % self.g.name)
             self.w.curr_glyph_note.set(self.g.name)
             if self.marginValidator(self.g) == True:
-                print('Margin validator was passed: %s' % self.g.name)
+                #print('Margin validator was passed: %s' % self.g.name)
                 self.w.LSB.set(int(self.g.leftMargin))
                 self.w.RSB.set(int(self.g.rightMargin))
             else:
-                print('Margin validator was NOT passed: %s' % self.g.name)
+                #print('Margin validator was NOT passed: %s' % self.g.name)
                 self.w.LSB.set('')
                 self.w.RSB.set('')
         else:
-            print('Glyph name validator was NOT passed.')
+            #print('Glyph name validator was NOT passed.')
             self.w.curr_glyph_note.set('None')
             self.w.LSB.set('')
             self.w.RSB.set('')
