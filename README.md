@@ -11,6 +11,8 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 ![](./_images/Sidebear_screen.png)
 
 ## Actions include:
+`Enter Desired SB` You may enter numerical values or glyph names. If you place a comma `,` before or after the glyph name, the opposite SB will be matched. (e.g. On glyph /u, `,n` input on the LSB will match the RSB of the /n.)
+<br />
 `Swap SBs`
 <br />
 `Make LSB = RSB`

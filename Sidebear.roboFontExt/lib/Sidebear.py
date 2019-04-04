@@ -1,19 +1,20 @@
 # menuTitle : Sidebear
 
 '''
-Robofont extension to quickly adjust glyph spacing.
+Robofont extension that installs an Inspector panel that enables 
+you to quickly manipulating your glyph’s sidebearings.
 
 Ryan Bugden
-v0.1
-2019-03-28
+v1.02:  2019.04.05
+v1:     2019.03.28
 '''
 
-from AppKit import *
+# from AppKit import *
 import vanilla
-from defcon import Font
-from defconAppKit.windows.baseWindow import BaseWindowController
 import mojo.UI
-from mojo.events import addObserver, removeObserver
+from mojo.events import addObserver
+
+other_SB = ','
 
 class Sidebear:
 
@@ -182,16 +183,21 @@ class Sidebear:
                 try:
                     spc2glyph = str(sender.get())
                     self.f = CurrentFont()
-                    if spc2glyph[0] == "|":
-                        spc2glyph = spc2glyph.replace("|","")
-                        if self.f[spc2glyph] != None:
-                            self.g.leftMargin = self.f[spc2glyph].leftMargin
-                        self.w.LSB.set(self.g.leftMargin)
-                    elif spc2glyph[-1] == "|":
-                        spc2glyph = spc2glyph.replace("|","")
+                    if other_SB in spc2glyph:
+                        spc2glyph = spc2glyph.replace(other_SB,"")
                         if self.f[spc2glyph] != None:
                             self.g.leftMargin = self.f[spc2glyph].rightMargin
                         self.w.LSB.set(self.g.leftMargin)
+                    # if spc2glyph[0] == other_SB:
+                    #     spc2glyph = spc2glyph.replace(other_SB,"")
+                    #     if self.f[spc2glyph] != None:
+                    #         self.g.leftMargin = self.f[spc2glyph].leftMargin
+                    #     self.w.LSB.set(self.g.leftMargin)
+                    # elif spc2glyph[-1] == other_SB:
+                    #     spc2glyph = spc2glyph.replace(other_SB,"")
+                    #     if self.f[spc2glyph] != None:
+                    #         self.g.leftMargin = self.f[spc2glyph].rightMargin
+                    #     self.w.LSB.set(self.g.leftMargin)
                     else:
                         if self.f[spc2glyph] != None:
                             self.g.leftMargin = self.f[spc2glyph].leftMargin
@@ -211,16 +217,21 @@ class Sidebear:
                 try:
                     spc2glyph = str(sender.get())
                     self.f = CurrentFont()
-                    if spc2glyph[0] == "|":
-                        spc2glyph = spc2glyph.replace("|","")
+                    if other_SB in spc2glyph:
+                        spc2glyph = spc2glyph.replace(other_SB,"")
                         if self.f[spc2glyph] != None:
                             self.g.rightMargin = self.f[spc2glyph].leftMargin
                         self.w.RSB.set(self.g.rightMargin)
-                    elif spc2glyph[-1] == "|":
-                        spc2glyph = spc2glyph.replace("|","")
-                        if self.f[spc2glyph] != None:
-                            self.g.rightMargin = self.f[spc2glyph].rightMargin
-                        self.w.RSB.set(self.g.rightMargin)
+                    # if spc2glyph[0] == other_SB:
+                    #     spc2glyph = spc2glyph.replace(other_SB,"")
+                    #     if self.f[spc2glyph] != None:
+                    #         self.g.rightMargin = self.f[spc2glyph].leftMargin
+                    #     self.w.RSB.set(self.g.rightMargin)
+                    # elif spc2glyph[-1] == other_SB:
+                    #     spc2glyph = spc2glyph.replace(other_SB,"")
+                    #     if self.f[spc2glyph] != None:
+                    #         self.g.rightMargin = self.f[spc2glyph].rightMargin
+                    #     self.w.RSB.set(self.g.rightMargin)
                     else:
                         if self.f[spc2glyph] != None:
                             self.g.rightMargin = self.f[spc2glyph].rightMargin
