@@ -332,7 +332,12 @@ class Sidebear:
             
         
     def incrementCallback(self, sender):
-        self.increment = int(sender.get())
+        prev_inc = self.increment
+        try:
+            self.increment = int(sender.get())
+        except ValueError:
+            self.increment = prev_inc
+            self.w.inc_text_box.set(prev_inc)
         
         
 # =========================== OBSERVERS =========================== #
