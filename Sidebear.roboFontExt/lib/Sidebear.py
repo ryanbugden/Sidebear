@@ -368,10 +368,13 @@ class Sidebear:
 # # =========================== VALIDATION =========================== #
         
     def marginValidator(self, glyph):
-        if glyph.leftMargin == None:
+        try:
+            if glyph.leftMargin == None:
+                return False
+            else:
+                return True
+        except AttributeError:
             return False
-        else:
-            return True
             
     def widthValidator(self, glyph):
         try:
