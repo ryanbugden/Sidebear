@@ -27,6 +27,7 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 `Contract both SBs` equally by that increment.
 <br /><br /><br />
 
+
 <hr />
 ʕ·ᴥ· ʔ
 <br />

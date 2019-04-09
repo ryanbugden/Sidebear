@@ -5,7 +5,7 @@ Robofont extension that installs an Inspector panel that enables
 you to quickly manipulating your glyph’s sidebearings.
 
 Ryan Bugden
-v1.02:  2019.04.05
+v1.0.3: 2019.04.09
 v1:     2019.03.28
 '''
 
@@ -16,11 +16,10 @@ from mojo.events import addObserver
 
 other_SB = ','
 
-class Sidebear:
+class Sidebear(object):
 
     def __init__(self):
         
-        self.f = None
         self.g = None
     
         window_width = 255
@@ -188,16 +187,6 @@ class Sidebear:
                         if self.f[spc2glyph] != None:
                             self.g.leftMargin = self.f[spc2glyph].rightMargin
                         self.w.LSB.set(self.g.leftMargin)
-                    # if spc2glyph[0] == other_SB:
-                    #     spc2glyph = spc2glyph.replace(other_SB,"")
-                    #     if self.f[spc2glyph] != None:
-                    #         self.g.leftMargin = self.f[spc2glyph].leftMargin
-                    #     self.w.LSB.set(self.g.leftMargin)
-                    # elif spc2glyph[-1] == other_SB:
-                    #     spc2glyph = spc2glyph.replace(other_SB,"")
-                    #     if self.f[spc2glyph] != None:
-                    #         self.g.leftMargin = self.f[spc2glyph].rightMargin
-                    #     self.w.LSB.set(self.g.leftMargin)
                     else:
                         if self.f[spc2glyph] != None:
                             self.g.leftMargin = self.f[spc2glyph].leftMargin
@@ -222,16 +211,6 @@ class Sidebear:
                         if self.f[spc2glyph] != None:
                             self.g.rightMargin = self.f[spc2glyph].leftMargin
                         self.w.RSB.set(self.g.rightMargin)
-                    # if spc2glyph[0] == other_SB:
-                    #     spc2glyph = spc2glyph.replace(other_SB,"")
-                    #     if self.f[spc2glyph] != None:
-                    #         self.g.rightMargin = self.f[spc2glyph].leftMargin
-                    #     self.w.RSB.set(self.g.rightMargin)
-                    # elif spc2glyph[-1] == other_SB:
-                    #     spc2glyph = spc2glyph.replace(other_SB,"")
-                    #     if self.f[spc2glyph] != None:
-                    #         self.g.rightMargin = self.f[spc2glyph].rightMargin
-                    #     self.w.RSB.set(self.g.rightMargin)
                     else:
                         if self.f[spc2glyph] != None:
                             self.g.rightMargin = self.f[spc2glyph].rightMargin
@@ -263,7 +242,6 @@ class Sidebear:
     
     def equalsRSBButtonCallback(self, sender):
         print("Starting Equals RSB")
-        print(self.g)
         if self.g != None:
             print("There's a glyph.")
             if self.marginValidator(self.g) == True:
@@ -345,14 +323,14 @@ class Sidebear:
     def glyphChanged(self, info):
         self.g = CurrentGlyph()
         if self.glyphNameValidator(self.g) == True:
-            #print('Glyph name validator was passed: %s' % self.g.name)
+            #print('Glyph name validator was passed: %s' % g.name)
             self.w.curr_glyph_note.set(self.g.name)
             if self.marginValidator(self.g) == True:
-                #print('Margin validator was passed: %s' % self.g.name)
+                #print('Margin validator was passed: %s' % g.name)
                 self.w.LSB.set(int(self.g.leftMargin))
                 self.w.RSB.set(int(self.g.rightMargin))
             else:
-                #print('Margin validator was NOT passed: %s' % self.g.name)
+                #print('Margin validator was NOT passed: %s' % g.name)
                 self.w.LSB.set('')
                 self.w.RSB.set('')
         else:
@@ -401,8 +379,8 @@ class Sidebear:
     def inspectorWindowWillShowDescriptions(self, notification):
         title = "Sidebear"
         item = dict(label=title, view=self.w, size=self.window_height, collapsed=False, canResize=False)
-        if notification["descriptions"][1]['label'] == "Sidebear":
-            del notification["descriptions"][1]
+        # if notification["descriptions"][1]['label'] == title:
+        #     del notification["descriptions"][1]
         notification["descriptions"].insert(1, item)
         
         
