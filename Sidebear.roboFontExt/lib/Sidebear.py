@@ -66,6 +66,7 @@ class Sidebear(object):
             callback = self.editLSBCallback,
             continuous = False
             )
+        self.w.LSB.getNSTextField().setAlignment_(2)
             
         # Left swap bridge rule
         self.w.left_sw_rule = vanilla.HorizontalLine((window_margin + third_width, window_margin + row_2_y + text_box_height/2, gutter, 1))
@@ -89,6 +90,7 @@ class Sidebear(object):
             callback = self.editRSBCallback,
             continuous = False
             )
+        self.w.RSB.getNSTextField().setAlignment_(2)
     
         # Center Glyph button
         self.w.center_glyph = vanilla.ImageButton(
@@ -131,6 +133,7 @@ class Sidebear(object):
             sizeStyle="small", 
             callback=self.incrementCallback
             )
+        self.w.inc_text_box.getNSTextField().setAlignment_(2)
             
         # Left expand/contract bridge rule
         self.w.left_ec_rule = vanilla.HorizontalLine((window_margin + third_width, window_margin + row_5_y + text_box_height/2, gutter, 1))
