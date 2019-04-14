@@ -414,6 +414,7 @@ class Sidebear(object):
 # =========================== BUILD PANEL =========================== #        
 	
 	def inspectorWindowWillShowDescriptions(self, notification):
+		print('Putting a panel on Inspector')
 		title = "Sidebear"
 		item = dict(label=title, view=self.view, size=self.view.window_height, collapsed=False, canResize=False)
 		if notification["descriptions"][1]['label'] == title:
