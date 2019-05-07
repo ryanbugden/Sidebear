@@ -5,20 +5,24 @@ Robofont extension that installs an Inspector panel that enables
 you to quickly manipulating your glyph’s sidebearings.
 
 Ryan Bugden
+v1.0.4: 2019.05.07
 v1.0.3: 2019.04.09
 v1:     2019.03.28
+
+Special thanks to Just van Rossum & Frederik Berlaen.
 '''
 
-# from AppKit import *
+import os
 import vanilla
 import mojo.UI
 from mojo.events import addObserver
 
 other_SB = ','
 
+
 class Sidebear(object):
 
-    def __init__(self):
+    def __init__(self, resources_path):
         
         self.g = None
     
@@ -66,6 +70,7 @@ class Sidebear(object):
             callback = self.editLSBCallback,
             continuous = False
             )
+        self.w.LSB.getNSTextField().setFocusRingType_(1)
         self.w.LSB.getNSTextField().setAlignment_(2)
             
         # Left swap bridge rule
@@ -74,9 +79,9 @@ class Sidebear(object):
         # Swap SB button
         self.w.swap_SB = vanilla.ImageButton(
             (window_margin + third_width + gutter, window_margin + row_2_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_Swap.pdf',
-            callback=self.swapSBButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_Swap.pdf',
+            callback = self.swapSBButtonCallback, 
+            sizeStyle = 'regular'
             )
             
         # Right swap bridge rule
@@ -90,14 +95,15 @@ class Sidebear(object):
             callback = self.editRSBCallback,
             continuous = False
             )
+        self.w.RSB.getNSTextField().setFocusRingType_(1)
         self.w.RSB.getNSTextField().setAlignment_(2)
     
         # Center Glyph button
         self.w.center_glyph = vanilla.ImageButton(
             (window_margin + third_width + gutter, window_margin + row_3_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_Center.pdf',
-            callback=self.centerGlyphButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_Center.pdf',
+            callback = self.centerGlyphButtonCallback, 
+            sizeStyle = 'regular'
             )
             
         # Left vert bridge rule
@@ -109,17 +115,17 @@ class Sidebear(object):
         # Equals RSB button
         self.w.equals_RSB = vanilla.ImageButton(
             (window_margin, window_margin + row_3_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_EqualRSB.pdf',
-            callback=self.equalsRSBButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_EqualRSB.pdf',
+            callback = self.equalsRSBButtonCallback, 
+            sizeStyle = 'regular'
             )
             
         # Equals LSB button
         self.w.equals_LSB = vanilla.ImageButton(
             (window_margin + third_width*2 + gutter*2, window_margin + row_3_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_EqualLSB.pdf',
-            callback=self.equalsLSBButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_EqualLSB.pdf',
+            callback = self.equalsLSBButtonCallback, 
+            sizeStyle = 'regular'
             )
         
         # Rule
@@ -130,9 +136,10 @@ class Sidebear(object):
         self.w.inc_text_box = vanilla.EditText(
             (window_margin + gutter + third_width, window_margin + row_5_y, third_width, text_box_height), 
             text = "%s" % self.increment, 
-            sizeStyle="small", 
-            callback=self.incrementCallback
+            sizeStyle = "small", 
+            callback = self.incrementCallback
             )
+        self.w.inc_text_box.getNSTextField().setFocusRingType_(1)
         self.w.inc_text_box.getNSTextField().setAlignment_(2)
             
         # Left expand/contract bridge rule
@@ -144,17 +151,17 @@ class Sidebear(object):
         # Close SBs
         self.w.close_SB = vanilla.ImageButton(
             (window_margin, window_margin + row_5_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_Close.pdf',
-            callback=self.closeSBButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_Close.pdf',
+            callback = self.closeSBButtonCallback, 
+            sizeStyle = 'regular'
             )
         
         # Open SBs
         self.w.open_SB = vanilla.ImageButton(
             (window_margin + third_width*2 + gutter*2, window_margin + row_5_y, third_width, text_box_height), 
-            imagePath='../resources/_icon_Open.pdf',
-            callback=self.openSBButtonCallback, 
-            sizeStyle='regular'
+            imagePath = resources_path + '/_icon_Open.pdf',
+            callback = self.openSBButtonCallback, 
+            sizeStyle = 'regular'
             )
             
         # Increment
@@ -164,8 +171,9 @@ class Sidebear(object):
             sizeStyle = "mini", 
             alignment = "center")
             
-        addObserver(self, "inspectorWindowWillShowDescriptions", "inspectorWindowWillShowDescriptions")
         addObserver(self, "glyphChanged", "currentGlyphChanged")
+        addObserver(self, "glyphChanged", "viewDidChangeGlyph")
+        addObserver(self, "glyphChanged", "glyphWindowDidOpen")
         addObserver(self, "glyphDraw", "draw")
         
         
@@ -377,14 +385,22 @@ class Sidebear(object):
             return False
             
             
-# =========================== BUILD PANEL =========================== #        
+# ======================== INSERT SIDEBEAR INTO INSPECTOR ======================== #        
     
+        
+class SidebearInsert:
+
+    def __init__(self):
+        self.resources_path = os.path.abspath("../resources")
+        # print(self.resources_path)
+        addObserver(self, "inspectorWindowWillShowDescriptions", "inspectorWindowWillShowDescriptions")
+
     def inspectorWindowWillShowDescriptions(self, notification):
         title = "Sidebear"
-        item = dict(label=title, view=self.w, size=self.window_height, collapsed=False, canResize=False)
-        # if notification["descriptions"][1]['label'] == title:
-        #     del notification["descriptions"][1]
+        bear = Sidebear(self.resources_path)
+        item = dict(label=title, view=bear.w, size=bear.window_height, collapsed=False, canResize=False)
+        if notification["descriptions"][1]['label'] == title:
+            del notification["descriptions"][1]
         notification["descriptions"].insert(1, item)
-        
-        
-Sidebear()
+
+SidebearInsert()
