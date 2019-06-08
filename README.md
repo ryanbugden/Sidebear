@@ -32,6 +32,6 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 ʕ·ᴥ· ʔ
 <br />
 Enjoy designing with your friendly Sidebear   
-Special thanks to Just van Rossum, Gustavo Ferreira, Frederik Berlaen.
+Special thanks to Just van Rossum, Gustavo Ferreira, Frederik Berlaen, Frank Griesshammer, Erik van Blokland.
 <br />
 
