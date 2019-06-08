@@ -9,7 +9,8 @@ v1.0.4: 2019.05.07
 v1.0.3: 2019.04.09
 v1:     2019.03.28
 
-Special thanks to Just van Rossum & Frederik Berlaen.
+Special thanks to:
+Just van Rossum, Gustavo Ferreira, Frederik Berlaen.
 '''
 
 import os
@@ -32,13 +33,13 @@ class Sidebear(object):
         vert_gutter = 12
         rule_gutter = vert_gutter -2
         text_box_height = 20
-        row_1_y = -4
+        row_1_y = -14
         row_2_y = row_1_y + vert_gutter + text_box_height - 5
         row_3_y = row_2_y + vert_gutter + text_box_height
         row_4_y = row_3_y + text_box_height + rule_gutter
         row_5_y = row_4_y + rule_gutter
         third_width = (window_width - (window_margin * 2) - (gutter * 2)) / 3
-        self.window_height = window_margin*2 + row_5_y + text_box_height + 11
+        self.window_height = window_margin*2 + row_5_y + text_box_height + 9
             
         # The group of elements
         self.w = vanilla.Group((0, 0, -0, -0))
