@@ -5,6 +5,7 @@ Robofont extension that installs an Inspector panel that enables
 you to quickly manipulating your glyph’s sidebearings.
 
 Ryan Bugden
+v1.0.5: 2020.01.24
 v1.0.4: 2019.05.07
 v1.0.3: 2019.04.09
 v1:     2019.03.28
@@ -206,7 +207,6 @@ class Sidebear(object):
                 except ValueError:
                     self.w.LSB.set(self.g.leftMargin)
         
-        
     def editRSBCallback(self, sender):
         if self.g != None:
             try:
@@ -239,7 +239,7 @@ class Sidebear(object):
                     self.g.leftMargin = int(prev_RSB)
                     self.g.rightMargin = int(prev_LSB)
                     # print("Swapped sidebearings")
-                    self.g.update()
+                    self.g.changed()
         
     def centerGlyphButtonCallback(self, sender):
         # Note: this may change the set width by 1, in favor of symmetrical SBs
@@ -249,9 +249,8 @@ class Sidebear(object):
                     margins_average = (self.g.rightMargin + self.g.leftMargin) // 2
                     self.g.leftMargin = margins_average
                     self.g.rightMargin = margins_average
-                    self.g.update()
+                    self.g.changed()
                 
-    
     def equalsRSBButtonCallback(self, sender):
         print("Starting Equals RSB")
         if self.g != None:
@@ -260,9 +259,8 @@ class Sidebear(object):
                 print("There's a margin.")
                 with self.g.undo("LSB = RSB"):
                     self.g.leftMargin = int(self.g.rightMargin)
-                    self.g.update()
+                    self.g.changed()
                     print("Done equals RSB")
-    
     
     def equalsLSBButtonCallback(self, sender):
         print("Starting Equals LSB")
@@ -272,7 +270,7 @@ class Sidebear(object):
                 print("There's a margin.")
                 with self.g.undo("RSB = LSB"):
                     self.g.rightMargin = int(self.g.leftMargin)
-                    self.g.update()
+                    self.g.changed()
                     print("Done equals LSB")
         
     def closeSBButtonCallback(self, sender):
@@ -286,13 +284,13 @@ class Sidebear(object):
                 with self.g.undo("Close sidebearings"):
                     self.g.leftMargin -= self.increment
                     self.g.rightMargin -= self.increment
-                    self.g.update()
+                    self.g.changed()
                     print("Done Close SBs")
             elif self.widthValidator(self.g) == True:
                 print("There's a width.")
                 with self.g.undo("Close glyph width"):
                     self.g.width -= self.increment 
-                    self.g.update()
+                    self.g.changed()
                     print("Done Close Width")
             else:
                 print('I don’t know what’s going on')
@@ -309,13 +307,13 @@ class Sidebear(object):
                 with self.g.undo("Open sidebearings"):
                     self.g.leftMargin += self.increment
                     self.g.rightMargin += self.increment
-                    self.g.update()
+                    self.g.changed()
                     print("Done Open SBs")
             elif self.widthValidator(self.g) == True:
                 print("There's a width.")
                 with self.g.undo("Open glyph width"):
                     self.g.width -= self.increment 
-                    self.g.update()
+                    self.g.changed()
                     print("Done Open Width")
             else:
                 print('I don’t know what’s going on')
