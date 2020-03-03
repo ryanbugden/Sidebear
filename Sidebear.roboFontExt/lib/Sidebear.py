@@ -1,17 +1,18 @@
 # menuTitle : Sidebear
 
 '''
-Robofont extension that installs an Inspector panel that enables 
-you to quickly manipulating your glyph’s sidebearings.
+Installs an Inspector panel that enables one to 
+quickly manipulating the current glyph’s sidebearings.
 
 Ryan Bugden
+v1.1.0: 2020.03.03
 v1.0.5: 2020.01.24
 v1.0.4: 2019.05.07
 v1.0.3: 2019.04.09
 v1:     2019.03.28
 
 Special thanks to:
-Just van Rossum, Gustavo Ferreira, Frederik Berlaen.
+Just van Rossum, Gustavo Ferreira, Frederik Berlaen, Colin Ford
 '''
 
 import os
@@ -20,7 +21,6 @@ import mojo.UI
 from mojo.events import addObserver
 
 other_SB = ','
-
 
 class Sidebear(object):
 
@@ -32,7 +32,7 @@ class Sidebear(object):
         window_margin = 20
         gutter = 25
         vert_gutter = 12
-        rule_gutter = vert_gutter -2
+        rule_gutter = vert_gutter - 2
         text_box_height = 20
         row_1_y = -14
         row_2_y = row_1_y + vert_gutter + text_box_height - 5
@@ -40,7 +40,7 @@ class Sidebear(object):
         row_4_y = row_3_y + text_box_height + rule_gutter
         row_5_y = row_4_y + rule_gutter
         third_width = (window_width - (window_margin * 2) - (gutter * 2)) / 3
-        self.window_height = window_margin*2 + row_5_y + text_box_height + 9
+        self.window_height = window_margin*2 + row_5_y + text_box_height + 8
             
         # The group of elements
         self.w = vanilla.Group((0, 0, -0, -0))
@@ -177,8 +177,6 @@ class Sidebear(object):
         addObserver(self, "glyphChanged", "viewDidChangeGlyph")
         addObserver(self, "glyphChanged", "glyphWindowDidOpen")
         addObserver(self, "glyphDraw", "draw")
-        
-        
 
     
 # =========================== CALLBACKS =========================== #
@@ -189,8 +187,8 @@ class Sidebear(object):
             try:
                 des_lsb = int(sender.get())
                 with self.g.undo("Edit LSB"):
-                    self.g.leftMargin = des_lsb
-                    self.w.LSB.set(self.g.leftMargin)
+                    self.g.angledLeftMargin = des_lsb
+                    self.w.LSB.set(self.g.angledLeftMargin)
             except ValueError:
                 try:
                     spc2glyph = str(sender.get())
@@ -198,22 +196,22 @@ class Sidebear(object):
                     if other_SB in spc2glyph:
                         spc2glyph = spc2glyph.replace(other_SB,"")
                         if self.f[spc2glyph] != None:
-                            self.g.leftMargin = self.f[spc2glyph].rightMargin
-                        self.w.LSB.set(self.g.leftMargin)
+                            self.g.angledLeftMargin = self.f[spc2glyph].angledRightMargin
+                        self.w.LSB.set(self.g.angledLeftMargin)
                     else:
                         if self.f[spc2glyph] != None:
-                            self.g.leftMargin = self.f[spc2glyph].leftMargin
-                        self.w.LSB.set(self.g.leftMargin)
+                            self.g.angledLeftMargin = self.f[spc2glyph].angledLeftMargin
+                        self.w.LSB.set(self.g.angledLeftMargin)
                 except ValueError:
-                    self.w.LSB.set(self.g.leftMargin)
+                    self.w.LSB.set(self.g.angledLeftMargin)
         
     def editRSBCallback(self, sender):
         if self.g != None:
             try:
                 des_rsb = int(sender.get())
                 with self.g.undo("Edit RSB"):
-                    self.g.rightMargin = des_rsb
-                    self.w.RSB.set(self.g.rightMargin)
+                    self.g.angledRightMargin = des_rsb
+                    self.w.RSB.set(self.g.angledRightMargin)
             except ValueError:
                 try:
                     spc2glyph = str(sender.get())
@@ -221,23 +219,23 @@ class Sidebear(object):
                     if other_SB in spc2glyph:
                         spc2glyph = spc2glyph.replace(other_SB,"")
                         if self.f[spc2glyph] != None:
-                            self.g.rightMargin = self.f[spc2glyph].leftMargin
-                        self.w.RSB.set(self.g.rightMargin)
+                            self.g.angledRightMargin = self.f[spc2glyph].angledLeftMargin
+                        self.w.RSB.set(self.g.angledRightMargin)
                     else:
                         if self.f[spc2glyph] != None:
-                            self.g.rightMargin = self.f[spc2glyph].rightMargin
-                        self.w.RSB.set(self.g.rightMargin)
+                            self.g.angledRightMargin = self.f[spc2glyph].angledRightMargin
+                        self.w.RSB.set(self.g.angledRightMargin)
                 except ValueError:
-                    self.w.RSB.set(self.g.rightMargin)
+                    self.w.RSB.set(self.g.angledRightMargin)
         
     def swapSBButtonCallback(self, sender):
         if self.g != None:
             if self.marginValidator(self.g) == True:
                 with self.g.undo("Swap SB"):
-                    prev_LSB = self.g.leftMargin
-                    prev_RSB = self.g.rightMargin
-                    self.g.leftMargin = int(prev_RSB)
-                    self.g.rightMargin = int(prev_LSB)
+                    prev_LSB = self.g.angledLeftMargin
+                    prev_RSB = self.g.angledRightMargin
+                    self.g.angledLeftMargin = int(prev_RSB)
+                    self.g.angledRightMargin = int(prev_LSB)
                     # print("Swapped sidebearings")
                     self.g.changed()
         
@@ -246,9 +244,9 @@ class Sidebear(object):
         if self.g != None:
             if self.marginValidator(self.g) == True:
                 with self.g.undo("Center glyph"):
-                    margins_average = (self.g.rightMargin + self.g.leftMargin) // 2
-                    self.g.leftMargin = margins_average
-                    self.g.rightMargin = margins_average
+                    margins_average = (self.g.angledRightMargin + self.g.angledLeftMargin) // 2
+                    self.g.angledLeftMargin = margins_average
+                    self.g.angledRightMargin = margins_average
                     self.g.changed()
                 
     def equalsRSBButtonCallback(self, sender):
@@ -258,7 +256,7 @@ class Sidebear(object):
             if self.marginValidator(self.g) == True:
                 print("There's a margin.")
                 with self.g.undo("LSB = RSB"):
-                    self.g.leftMargin = int(self.g.rightMargin)
+                    self.g.angledLeftMargin = int(self.g.angledRightMargin)
                     self.g.changed()
                     print("Done equals RSB")
     
@@ -269,7 +267,7 @@ class Sidebear(object):
             if self.marginValidator(self.g) == True:
                 print("There's a margin.")
                 with self.g.undo("RSB = LSB"):
-                    self.g.rightMargin = int(self.g.leftMargin)
+                    self.g.angledRightMargin = int(self.g.angledLeftMargin)
                     self.g.changed()
                     print("Done equals LSB")
         
@@ -282,8 +280,8 @@ class Sidebear(object):
             elif self.marginValidator(self.g) == True:
                 print("There's a margin.")
                 with self.g.undo("Close sidebearings"):
-                    self.g.leftMargin -= self.increment
-                    self.g.rightMargin -= self.increment
+                    self.g.angledLeftMargin -= self.increment
+                    self.g.angledRightMargin -= self.increment
                     self.g.changed()
                     print("Done Close SBs")
             elif self.widthValidator(self.g) == True:
@@ -305,8 +303,8 @@ class Sidebear(object):
             elif self.marginValidator(self.g) == True:
                 print("There's a margin.")
                 with self.g.undo("Open sidebearings"):
-                    self.g.leftMargin += self.increment
-                    self.g.rightMargin += self.increment
+                    self.g.angledLeftMargin += self.increment
+                    self.g.angledRightMargin += self.increment
                     self.g.changed()
                     print("Done Open SBs")
             elif self.widthValidator(self.g) == True:
@@ -337,22 +335,20 @@ class Sidebear(object):
             self.w.curr_glyph_note.set(self.g.name)
             if self.marginValidator(self.g) == True:
                 #print('Margin validator was passed: %s' % g.name)
-                self.w.LSB.set(int(self.g.leftMargin))
-                self.w.RSB.set(int(self.g.rightMargin))
+                self.w.LSB.set(int(self.g.angledLeftMargin))
+                self.w.RSB.set(int(self.g.angledRightMargin))
             else:
-                #print('Margin validator was NOT passed: %s' % g.name)
                 self.w.LSB.set('')
                 self.w.RSB.set('')
         else:
-            #print('Glyph name validator was NOT passed.')
             self.w.curr_glyph_note.set('None')
             self.w.LSB.set('')
             self.w.RSB.set('')
             
     def glyphDraw(self, view):
         if self.marginValidator(self.g) == True:
-            self.w.LSB.set(int(self.g.leftMargin))
-            self.w.RSB.set(int(self.g.rightMargin))
+            self.w.LSB.set(int(self.g.angledLeftMargin))
+            self.w.RSB.set(int(self.g.angledRightMargin))
         else:
             self.w.LSB.set('')
             self.w.RSB.set('')
@@ -362,7 +358,7 @@ class Sidebear(object):
         
     def marginValidator(self, glyph):
         try:
-            if glyph.leftMargin == None:
+            if glyph.angledLeftMargin == None:
                 return False
             else:
                 return True
@@ -391,7 +387,6 @@ class SidebearInsert:
 
     def __init__(self):
         self.resources_path = os.path.abspath("../resources")
-        # print(self.resources_path)
         addObserver(self, "inspectorWindowWillShowDescriptions", "inspectorWindowWillShowDescriptions")
 
     def inspectorWindowWillShowDescriptions(self, notification):
