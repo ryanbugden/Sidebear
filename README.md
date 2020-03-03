@@ -32,6 +32,16 @@ Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 ʕ·ᴥ· ʔ
 <br />
 Enjoy designing with your friendly Sidebear   
-Special thanks to Just van Rossum, Gustavo Ferreira, Frederik Berlaen, Frank Griesshammer, Erik van Blokland.
+Special thanks to Just van Rossum, Gustavo Ferreira, Frederik Berlaen, Frank Griesshammer, Erik van Blokland, Colin Ford
 <br />
+
+### Versions
+
+```
+v1.1.0: 2020-03-03	Support for italic angles. Thanks for the note, Colin Ford!
+v1.0.5: 2020.01.24
+v1.0.4: 2019.05.07
+v1.0.3: 2019.04.09
+v1:     2019.03.28  Initial release
+```
 
