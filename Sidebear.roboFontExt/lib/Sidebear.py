@@ -5,6 +5,7 @@ Installs an Inspector panel that enables one to
 quickly manipulating the current glyph’s sidebearings.
 
 Ryan Bugden
+v1.1.1: 2020.03.16
 v1.1.0: 2020.03.03
 v1.0.5: 2020.01.24
 v1.0.4: 2019.05.07
@@ -244,7 +245,7 @@ class Sidebear(object):
         if self.g != None:
             if self.marginValidator(self.g) == True:
                 with self.g.undo("Center glyph"):
-                    margins_average = (self.g.angledRightMargin + self.g.angledLeftMargin) // 2
+                    margins_average = (round(self.g.angledRightMargin) + round(self.g.angledLeftMargin)) // 2
                     self.g.angledLeftMargin = margins_average
                     self.g.angledRightMargin = margins_average
                     self.g.changed()
