@@ -293,6 +293,7 @@ class Sidebear(object):
                     # print("Done Close Width")
             else:
                 # print('I don’t know what’s going on')
+                pass
         
         
     def openSBButtonCallback(self, sender):
@@ -316,6 +317,7 @@ class Sidebear(object):
                     # print("Done Open Width")
             else:
                 # print('I don’t know what’s going on')
+                pass
             
         
     def incrementCallback(self, sender):
