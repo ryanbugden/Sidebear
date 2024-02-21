@@ -423,7 +423,7 @@ class Sidebear(object):
         
     def marginValidator(self, glyph):
         try:
-            if glyph.leftMargin:
+            if glyph.leftMargin or glyph.leftMargin == 0:
                 return True
             else:
                 return False
@@ -432,7 +432,7 @@ class Sidebear(object):
             
     def widthValidator(self, glyph):
         try:
-            if glyph.width:
+            if glyph.width or glyph.width == 0:
                 return True
             else:
                 return False

@@ -7,7 +7,7 @@
 	<key>developer</key>
 	<string>Ryan Bugden</string>
 	<key>developerURL</key>
-	<string>ryanbugden.com</string>
+	<string>https://ryanbugden.com</string>
 	<key>html</key>
 	<false/>
 	<key>launchAtStartUp</key>
@@ -23,6 +23,6 @@
 	<key>timeStamp</key>
 	<real>1701754015</real>
 	<key>version</key>
-	<string>2.0.2</string>
+	<string>2.1</string>
 </dict>
 </plist>
