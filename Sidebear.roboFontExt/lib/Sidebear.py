@@ -5,13 +5,6 @@ Installs an Inspector panel that enables one to
 quickly manipulating the current glyph’s sidebearings.
 
 Ryan Bugden
-v1.1.6: 2023.05.31
-v1.1.5: 2022.03.01
-v1.1.1: 2020.03.16
-v1.1.0: 2020.03.03
-v1.0.5: 2020.01.24
-v1.0.4: 2019.05.07
-v1.0.3: 2019.04.09
 v1:     2019.03.28
 
 Special thanks to:
@@ -91,8 +84,6 @@ class Sidebear(object):
             callback = self.editLSBCallback,
             continuous = False
             )
-        self.w.LSB.getNSTextField().setFocusRingType_(1)
-        self.w.LSB.getNSTextField().setAlignment_(2)
             
         # Left swap bridge rule
         self.w.left_sw_rule = vanilla.HorizontalLine((window_margin + third_width, window_margin + row_2_y + text_box_height/2, gutter, 1))
@@ -115,8 +106,6 @@ class Sidebear(object):
             callback = self.editRSBCallback,
             continuous = False
             )
-        self.w.RSB.getNSTextField().setFocusRingType_(1)
-        self.w.RSB.getNSTextField().setAlignment_(2)
     
         # Center Glyph button
         self.w.center_glyph = vanilla.ImageButton(
@@ -156,8 +145,6 @@ class Sidebear(object):
             sizeStyle = "small", 
             callback = self.incrementCallback
             )
-        self.w.inc_text_box.getNSTextField().setFocusRingType_(1)
-        self.w.inc_text_box.getNSTextField().setAlignment_(2)
             
         # Left expand/contract bridge rule
         self.w.left_ec_rule = vanilla.HorizontalLine((window_margin + third_width, window_margin + row_5_y + text_box_height/2, gutter, 1))
@@ -186,6 +173,11 @@ class Sidebear(object):
             sizeStyle = "mini", 
             alignment = "center")
 
+        # Specific styling
+        for text_box in [self.w.LSB, self.w.RSB, self.w.inc_text_box]:
+            ns_text = text_box.getNSTextField()
+            ns_text.setFocusRingType_(1)
+            ns_text.setAlignment_(1)
         for button in [self.w.open_SB, self.w.close_SB, self.w.equals_LSB, self.w.equals_RSB, self.w.center_glyph, self.w.swap_SB]:
             ns_button = button.getNSButton()
             ns_button.setBezelStyle_(8)
@@ -199,9 +191,7 @@ class Sidebear(object):
 
         self.updateUI_BothSB()
 
-
 # =========================== CUSTOM FUNCTIONS =========================== #
-
 
     def LSB_math_value(self, value):
         LSBs = {}
@@ -213,6 +203,7 @@ class Sidebear(object):
             result = None
         return result
 
+
     def RSB_math_value(self, value):
         RSBs = {}
         for g in self.f:
@@ -222,6 +213,7 @@ class Sidebear(object):
         except:
             result = None
         return result
+
 
     def set_button_images(self):
         buttons_and_images = {
@@ -238,10 +230,8 @@ class Sidebear(object):
             else:
                 button.setImage(image_path)
 
-    
 # =========================== CALLBACKS =========================== #
 
-    
     def editLSBCallback(self, sender):
         if self.g != None:
             try:
@@ -267,6 +257,7 @@ class Sidebear(object):
                     pass
             self.updateUI_BothSB()
             self.g.changed()
+        
         
     def editRSBCallback(self, sender):
         if self.g != None:
@@ -294,6 +285,7 @@ class Sidebear(object):
             self.updateUI_BothSB()
             self.g.changed()
         
+        
     def swapSBButtonCallback(self, sender):
         if self.g != None:
             if self.marginValidator(self.g) == True:
@@ -306,6 +298,7 @@ class Sidebear(object):
             self.updateUI_BothSB()
             self.g.changed()
         
+        
     def centerGlyphButtonCallback(self, sender):
         # Warning: This may change the set width by 1, in favor of symmetrical SBs
         if self.g != None:
@@ -316,6 +309,7 @@ class Sidebear(object):
                     self.g.angledRightMargin = margins_average
             self.updateUI_BothSB()
             self.g.changed()
+                
                 
     def equalsRSBButtonCallback(self, sender):
         # print("Starting Equals RSB")
@@ -329,6 +323,7 @@ class Sidebear(object):
             self.updateUI_BothSB()
             self.g.changed()
     
+    
     def equalsLSBButtonCallback(self, sender):
         # print("Starting Equals LSB")
         if self.g != None:
@@ -340,6 +335,7 @@ class Sidebear(object):
                     # print("Done equals LSB")
             self.updateUI_BothSB()
             self.g.changed()
+        
         
     def closeSBButtonCallback(self, sender):
         # print("\nStarting Close SBs")
@@ -364,6 +360,7 @@ class Sidebear(object):
             self.updateUI_BothSB()
             self.g.changed()
         
+        
     def openSBButtonCallback(self, sender):
         # print("\nStarting Open SBs")
         if self.g != None:
@@ -382,6 +379,7 @@ class Sidebear(object):
             self.updateUI_BothSB()
             self.g.changed()
         
+        
     def incrementCallback(self, sender):
         prev_inc = self.increment
         try:
@@ -391,6 +389,7 @@ class Sidebear(object):
             self.w.inc_text_box.set(prev_inc)
         setExtensionDefault(self.pref_key, self.increment)
             
+            
     def updateUI_BothSB(self):
         # print("Updating the SBs in Sidebear’s UI")
         if self.marginValidator(self.g) == True:
@@ -399,7 +398,6 @@ class Sidebear(object):
         else:
             self.w.LSB.set('')
             self.w.RSB.set('')
-
 
 # =========================== OBSERVERS =========================== #
         
@@ -413,8 +411,10 @@ class Sidebear(object):
 
         self.updateUI_BothSB()
             
+            
     def glyphDraw(self, view):
         self.updateUI_BothSB()
+
 
     def appearanceChanged(self, notification):
         self.set_button_images()
@@ -430,6 +430,7 @@ class Sidebear(object):
         except AttributeError:
             return False
             
+            
     def widthValidator(self, glyph):
         try:
             if glyph.width or glyph.width == 0:
@@ -438,6 +439,7 @@ class Sidebear(object):
                 return False
         except TypeError:
             return False
+            
             
     def glyphNameValidator(self, glyph):
         try:
@@ -458,6 +460,7 @@ class SidebearInsert:
         self.resources_path = os.path.abspath("../resources")
         addObserver(self, "inspectorWindowWillShowDescriptions", "inspectorWindowWillShowDescriptions")
 
+
     def inspectorWindowWillShowDescriptions(self, notification):
         title = "Sidebear"
         bear = Sidebear(self.resources_path)
@@ -465,5 +468,6 @@ class SidebearInsert:
         if notification["descriptions"][1]['label'] == title:
             del notification["descriptions"][1]
         notification["descriptions"].insert(1, item)
+
 
 SidebearInsert()

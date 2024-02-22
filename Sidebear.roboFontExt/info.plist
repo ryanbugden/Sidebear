@@ -17,12 +17,12 @@
 	<key>name</key>
 	<string>Sidebear</string>
 	<key>requiresVersionMajor</key>
-	<string>3</string>
+	<string>4</string>
 	<key>requiresVersionMinor</key>
-	<string>2</string>
+	<string>5b</string>
 	<key>timeStamp</key>
-	<real>1701754015</real>
+	<real>1708626264</real>
 	<key>version</key>
-	<string>2.1</string>
+	<string>2.2</string>
 </dict>
 </plist>
