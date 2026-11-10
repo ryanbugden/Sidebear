@@ -1,0 +1,19 @@
+name: Validate and Build the Extension
+
+on:
+  push:
+
+jobs:
+  validate_and_build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Validate and Build
+        uses: ryanbugden/roboFont-Extension-action@main
+        with:
+          autotagging: true
+          prebuild: |
+            mkdir -p source/html
+            cp README.md source/html/index.md
+            sed -i 's|source/|../|g' source/html/index.md

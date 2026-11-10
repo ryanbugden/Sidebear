@@ -1,0 +1,10 @@
+name: Sidebear
+developer: Ryan Bugden
+developerURL: http://ryanbugden.com
+launchAtStartUp: true
+mainScript: popup.py
+version: 3.0
+html: true
+timeStamp: 1760205911
+requiresVersionMajor: '4'
+requiresVersionMinor: '5'

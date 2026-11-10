@@ -1,14 +1,15 @@
+<img src="source/resources/mechanic_icon.png"  width="80">
+
 # Sidebear
 
-![](./_images/Sidebear_Icon.png)
-<br />
+
 A RoboFont extension for quickly manipulating your glyph’s sidebearings. 
-<br />
+
 Sidebear installs itself in your Inspector, underneath the Glyph Info pane.
 <br />
 <br />
 
-![](./_images/Sidebear_screen.png)
+
 
 ## Actions include:
 `Enter Desired SB` You may enter numerical values or glyph names. If you place a comma `,` before or after the glyph name, the opposite SB will be matched (e.g. `,n` input on the LSB of glyph `u`  will match the RSB of the `n`.). Also, like the native Glyph panel, you can input glyph math (e.g. `(H + O)/2 + 2`)
