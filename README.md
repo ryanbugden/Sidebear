@@ -1,6 +1,9 @@
+
+
+<img src="_images/Sidebear_Icon_Mechanic.png"  width="80">
+
 # Sidebear
 
-![](./_images/Sidebear_Icon.png)
 <br />
 A RoboFont extension for quickly manipulating your glyph’s sidebearings. 
 <br />
