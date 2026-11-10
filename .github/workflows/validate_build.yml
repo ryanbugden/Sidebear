@@ -2,6 +2,8 @@ name: Validate and Build the Extension
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   validate_and_build:
